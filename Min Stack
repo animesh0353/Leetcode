@@ -1,0 +1,41 @@
+class MinStack {
+   public static class Node
+		{
+			int data;
+			int min;
+			Node next;
+			Node prev;
+			public Node(int data, int min, Node prev) {
+				// TODO Auto-generated constructor stub
+				this.data = data;
+				this.min = min;
+				next = null;
+				this.prev = prev;
+			}
+		}
+
+		Node head;
+			
+		    public void push(int x) {
+		    	int min = x;
+		    	if(head != null)
+					if(head.min < x)
+						min = head.min;
+		        Node node = new Node(x, min, head);
+		        head = node;
+		    }
+
+		    public void pop() {
+		        if(head == null)
+		        	return;
+		        head = head.prev;
+		    }
+
+		    public int top() {
+		        return head.data;
+		    }
+
+		    public int getMin() {
+		        return head.min;
+		    }
+}
