@@ -1,0 +1,19 @@
+public class Solution {
+    public String convert(String s, int numRows) {
+        if(numRows == 1)
+			 return s;
+        char[] arr = s.toCharArray();
+         StringBuffer strbuff = new StringBuffer();
+	        int len = s.length();
+	        for (int i = 0; i < numRows; i++) {
+				for (int k = i; k < len; k= k+2*(numRows -1)) {
+					strbuff.append(arr[k]);
+					int secondnum = k+2*(numRows-i -1);
+					if((secondnum < len) && i!= 0 && i != numRows-1)
+						strbuff.append(arr[secondnum]);
+				}
+			}
+	        return strbuff.toString();
+        
+    }
+}
