@@ -1,0 +1,45 @@
+public class Solution {
+    
+  
+	public  boolean isSafe(char[][] board, int m ,int n, char ch)
+	{
+		for (int col = 0; col < 9; col++)
+			if(board[m][col] == ch)
+				return false;
+		for (int row = 0; row < 9; row++)
+			if(board[row][n] == ch)
+				return false;
+		int gridRow = m - m%3;
+		int gridCol = n - n%3;
+		for (int row = gridRow; row < gridRow + 3; row++) 
+			for (int col = gridCol; col < gridCol + 3; col++)
+				if(board[row][col] == ch)
+					return false;
+		
+		return true;
+			
+		
+	}
+
+    
+    public boolean isValidSudoku(char[][] board) {
+       for (int row = 0; row <9; row++) 
+		{
+			for (int col = 0; col < 9; col++) 
+			{
+				if(board[row][col] != '.')
+				{
+					char check  = board[row][col];
+					board[row][col] = '.';
+						if(!isSafe(board, row, col, check))
+							return false;
+						else
+							board[row][col] = check;
+				}
+			}
+			
+		}
+		
+		return true;
+    }
+}
