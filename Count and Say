@@ -1,0 +1,32 @@
+public class Solution {
+      public String nthsequence(String string)
+	  {
+		  char[] ch = string.toCharArray();
+		  StringBuffer strbuff = new StringBuffer();
+		  int counter = 1;
+		  char prev = ch[0];
+		  for (int i = 1; i < ch.length; i++) {
+			if(ch[i] == prev )
+				counter++;
+			else 
+			{
+				strbuff.append(Integer.toString(counter) + Character.toString(prev));
+				counter = 1;
+				prev = ch[i];
+			}
+		}
+		strbuff.append(Integer.toString(counter) + Character.toString(prev));
+		return strbuff.toString();
+	  }
+	  
+	  
+	  public String countAndSay(int n) {
+	      String string = "1";
+		  for (int i = 1; i < n; i++) {
+			string = nthsequence(string);
+		}
+		  return string;
+		 
+	        
+	    }
+}
