@@ -1,0 +1,62 @@
+public class Solution {
+    
+    public int findRotationPoint(int[] arr, int low , int high)
+{
+	while(low <= high)
+		{
+			if(low == high)
+				return low;
+			int mid = (low + high)/2;
+			if(mid == low && arr[mid] <= arr[mid+1])
+				return mid;
+				
+			if(mid-1 >=0 && arr[mid] < arr[mid-1] && arr[mid] <= arr[mid+1])
+				return mid;
+			if(mid +1 <= high && arr[mid] > arr[mid + 1] )
+				return mid+1;
+			if(arr[mid] >= arr[low])
+				low = mid +1;
+			else
+				high = mid - 1;
+		}
+		
+		
+		return low;
+	}
+	
+	public static int binarySearch(int[] arr, int low , int high, int val)
+{
+		while(low <= high)
+		{
+			int mid = (low + high)/2;
+			if(arr[mid] == val)
+				return mid;
+			if((mid-1 >=0 && val > arr[mid-1] && val < arr[mid]) )
+				return -1;
+			if(mid + 1 < arr.length && val > arr[mid] && val < arr[mid+1])
+				return -1;
+			if(arr[mid] > val)
+				high = mid - 1;
+			else
+				low = mid + 1;
+		}
+		
+		
+		return -1;
+	}
+    
+    public int search(int[] nums, int target) {
+        int rot = findRotationPoint(nums, 0, nums.length-1);
+		int x = binarySearch(nums, 0, rot -1, target);
+		if( x < 0)
+		{
+			int y = binarySearch(nums, rot, nums.length -1, target);
+			if(y >= rot)
+				return y;
+			else
+				return -1;
+		}
+		else
+		    return x;
+    }
+}
