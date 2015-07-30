@@ -1,0 +1,38 @@
+public class Solution {
+    public int[] searchRange(int[] nums, int target) {
+        
+        int low = 0;
+        int high = nums.length - 1;
+        boolean flag = false;
+        int mid = -1;
+        while(low <= high)
+        {
+            mid = (low + high)/2;
+            if(nums[mid] == target)
+            {
+                flag = true;
+                break;
+            }
+            if(nums[mid] > target)
+                high = mid -1;
+            else
+                low = mid+1;
+        }
+        
+        if(flag)
+        {
+            low = mid;
+            while(low > 0 && nums[low-1] == target)
+                low--;
+            high = mid;
+            while(high < nums.length -1 && nums[high +1] == target)
+                high++;
+            int[] arr = {low, high};
+            return arr;
+        }
+        
+        int[] arr = {-1, -1};
+        return arr;
+        
+    }
+}
