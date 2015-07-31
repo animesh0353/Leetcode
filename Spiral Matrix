@@ -1,0 +1,48 @@
+public class Solution {
+      public List<Integer> spiralOrder(int[][] matrix) 
+	  {
+		 	  List<Integer> list = new LinkedList<Integer>();
+		  int n = matrix.length;
+		  if(n == 0)
+			  return list;
+		  int m = matrix[0].length;
+		  if(n==1 || m==1)
+		  {
+			  for (int i = 0; i < n; i++)
+				for (int j = 0; j <m; j++)
+					list.add(matrix[i][j]);
+			  return list;
+		  }
+		  int k = 0, l = 0;
+		 while(k< n && l < m)
+		 {
+			  // for Upper row
+			  for (int col = l; col < m; col++) 
+				  list.add(matrix[k][col]);
+			  k++;
+		 
+			  
+			  // for Right col
+			  for (int row = k; row < n; row++)
+				  list.add(matrix[row][m-1]);
+			  m--;
+			  
+			  // for lower row
+			  if(k < n)
+			  {
+				  for (int col = m-1; col >= l; col--)
+					  list.add(matrix[n-1][col]);
+				  n--;
+			  }
+			  
+			  // for left col
+			  if(l<m)
+			  {
+				  for (int row = n-1; row >= k; row--) 
+					  list.add(matrix[row][l]);
+				  l++;
+			  }
+		  }
+		  return list;
+	  }
+}
