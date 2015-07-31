@@ -1,0 +1,29 @@
+public class Solution {
+    // you need treat n as an unsigned value
+    public  int reverseBits(int n) 
+	{
+        String string = Integer.toBinaryString(n);
+        char[] ch1 = string.toCharArray();
+        char[] ch = new char[32];
+        for (int i = 31; i >=0; i--) {
+        	if(i < ch1.length)
+        		ch[31 - i] = ch1[ch1.length -i -1];
+        	else
+        		ch[31 - i] = '0';
+		}
+        
+        for (int i = 0; i < 16; i++) 
+        {
+			if(ch[i] != ch[31-i])
+			{
+				char temp = ch[i];
+				ch[i] = ch[31-i];
+				ch[31-i] = temp;
+			}
+		}
+        string = new String(ch);
+        long val = Long.parseLong(string,2);
+        return (int)val;
+        
+    }
+}
