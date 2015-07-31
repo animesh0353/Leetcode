@@ -1,0 +1,16 @@
+public class Solution {
+    public int rangeBitwiseAnd(int m, int n) {
+        int result = m^n;
+        int pos = 0;
+        for(int i =30; i>=0; i--)
+        {
+            if((result>>i & 1) == 1)
+            {
+                pos = i;
+                break;
+            }
+        }
+        result = (m>>pos)<<pos;
+        return result;
+    }
+}
