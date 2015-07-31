@@ -1,0 +1,35 @@
+public class Solution {
+    public List<String> summaryRanges(int[] nums) {
+        
+        int n = nums.length;
+        
+        int counter = 1;
+        List<String> list = new LinkedList<String>();
+        if(n == 0)
+            return list;
+        StringBuffer sb = new StringBuffer();
+        sb.append(nums[0]);
+        
+        for(int i=1; i<n; i++)
+        {
+           
+                if(nums[i-1]+1 != nums[i])
+                {
+                    if(counter != 1)
+                        sb.append("->"+nums[i-1]);
+                    list.add(sb.toString());
+                    sb = new StringBuffer();
+                    sb.append(nums[i]);
+                    counter = 1;
+                }
+                else
+                    counter++;
+            
+        }
+        if(counter != 1)
+                sb.append("->"+nums[n-1]);
+        list.add(sb.toString());
+         
+        return list;  
+    }
+}
