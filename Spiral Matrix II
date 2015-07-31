@@ -1,0 +1,27 @@
+public class Solution {
+     public int[][] generateMatrix(int n) 
+	    {
+	        int counter = 1;
+	        int[][] arr = new int[n][n];
+	        for (int i = 0; i < n/2; i++) {
+	        	// for Upper row
+				for (int col = i; col < n-1-i; col++) 
+					arr[i][col] = counter++;
+				
+				// for right col 
+				for (int row = i; row < n-1-i; row++)
+					arr[row][n-1-i] = counter++;
+				
+				// for Down row
+				for (int col = n-1-i; col > i ; col--) 
+					arr[n-1-i][col] = counter++;
+				
+				// for Left col
+				for (int row = n-1-i; row > i; row--) 
+					arr[row][i] = counter++;
+			}
+	        if(n%2 != 0)
+	        	arr[n/2][n/2] = counter;
+	        return arr;
+	    }
+}
