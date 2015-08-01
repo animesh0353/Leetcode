@@ -1,0 +1,13 @@
+public class Solution {
+    public static int[] climb = new int[5000];
+	public int climbStairs(int n) {
+		if(n == 0)
+			return 1;
+		if(n < 0)
+			return 0;
+		if(n>0 && climb[n]==0)
+			climb[n] = climbStairs(n-1) + climbStairs(n-2);
+		
+		return climb[n];
+	}
+}
