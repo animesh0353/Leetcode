@@ -1,0 +1,72 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public static class Pair
+	{
+		int index;
+		ListNode node;
+		public Pair(int index, ListNode node) {
+			// TODO Auto-generated constructor stub
+			this.index = index;
+			this.node = node;
+		}
+	}
+	
+	public ListNode mergeKLists(ListNode[] lists) {
+		int len = lists.length;
+		PriorityQueue<Pair> pQueue = new PriorityQueue<Pair>(len+1, new Comparator<Pair>() {
+
+			@Override
+			public int compare(Pair o1, Pair o2) {
+				// TODO Auto-generated method stub
+				return Integer.compare(o1.node.val, o2.node.val);
+			}
+		});
+		
+		Pair pair;
+		for (int i = 0; i < len; i++) {
+			if(lists[i] != null)
+			{
+				ListNode temp = lists[i];
+				if(temp != null)
+				{
+					lists[i] = temp.next;
+					temp.next = null;
+							pair = new Pair(i, temp);
+					pQueue.add(pair);
+				}
+			}
+		}
+		ListNode head = null, node,temp=null;
+		while(!pQueue.isEmpty())
+		{
+			pair = pQueue.remove();
+			if(head == null)
+			{
+				head = pair.node;
+				temp = pair.node;
+			}
+			else
+			{
+				temp .next = pair.node;
+				temp = temp.next;
+			}
+			if(lists[pair.index] != null)
+			{
+				node = lists[pair.index];
+				lists[pair.index] = node.next;
+				node.next = null;
+				pair = new Pair(pair.index, node);
+				pQueue.add(pair);
+			}
+				
+		}
+		return head;
+	}
+}
