@@ -1,0 +1,94 @@
+	class TrieNode
+	{
+		int value;
+		TrieNode[] child = new TrieNode[26];
+		public TrieNode() {
+			// TODO Auto-generated constructor stub
+			value = 0;
+			for (int i = 0; i < child.length; i++)
+				child[i] = null;
+		}
+	}
+	
+	public class WordDictionary 
+	{
+		TrieNode root;
+		int count;
+		public WordDictionary() {
+			// TODO Auto-generated constructor stub
+			root = new TrieNode();
+		}
+		
+		public int chToInt(char c)
+		{
+			return c-'a';
+		}
+
+	    // Adds a word into the data structure.
+		public void addWord(String word) 
+		{
+			char[] ch = word.toCharArray();
+			TrieNode curr = root, prev = null;
+			for (int i = 0; i < ch.length; i++) 
+			{
+				int index = chToInt(ch[i]);
+				if(curr.child[index] == null)
+					curr.child[index] = new TrieNode();
+				if(i == ch.length-1)
+					curr.child[index].value++;
+				curr = curr.child[index];
+			}
+
+		}
+
+		
+		// bactraking function to check whther string is present or not
+		public boolean backtrackingSearch(char[] ch, int pos, TrieNode curr)
+		{
+		if(ch[pos] == '.')
+			{
+				for (int j = 0; j < 26; j++) 
+				{
+					if(curr.child[j] != null)
+					{
+						if (pos < ch.length -1)
+						{
+							if( backtrackingSearch(ch, pos+1, curr.child[j])) 
+								return true;
+						}
+						else
+						{
+							if(pos == ch.length-1 && curr.child[j] != null && curr.child[j].value > 0)
+								return true;
+						}
+					}
+				}
+				return false;
+			}
+			else 
+			{
+				int index = chToInt(ch[pos]);
+				if(curr.child[index] == null)
+					return false;
+				if(pos<ch.length-1 && !backtrackingSearch(ch, pos+1, curr.child[index]))
+					return false;
+				if(pos == ch.length-1 && curr.child[index].value < 1 ) 
+					return false;
+			}
+			return true;
+		}
+		
+		
+	    // Returns if the word is in the data structure. A word could
+	    // contain the dot character '.' to represent any one letter.
+	    public boolean search(String word) 
+	    {
+	    	char[] ch = word.toCharArray();
+	    	return backtrackingSearch(ch, 0, root);
+	    }
+	}
+
+// Your WordDictionary object will be instantiated and called as such:
+// WordDictionary wordDictionary = new WordDictionary();
+// wordDictionary.addWord("word");
+// wordDictionary.search("pattern");
