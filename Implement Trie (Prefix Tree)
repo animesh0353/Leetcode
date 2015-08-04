@@ -1,0 +1,88 @@
+	class TrieNode {
+	    // Initialize your data structure here.
+		int value;
+		TrieNode[] child = new TrieNode[26];
+	    public TrieNode()
+	    {
+	    	value = 0;
+	    	for (int i = 0; i < 26; i++) 
+				child[i] = null;
+	    }
+	}
+
+	public class Trie 
+	{
+
+		private TrieNode root;
+		int count;
+		
+		public int chToInt(char c)
+		{
+			return c-'a';
+		}
+
+		public Trie() {
+			root = new TrieNode();
+		}
+
+		// Inserts a word into the trie.
+		public void insert(String word) 
+		{
+			char[] ch = word.toCharArray();
+			TrieNode node = root,prev = null;
+			int i;
+			
+			for (i = 0; i < ch.length; i++) 
+			{
+				int index = chToInt(ch[i]);
+				if(node.child[index] ==null)
+					node.child[index] = new TrieNode();
+				prev = node;
+				node = node.child[index];
+				if(i == ch.length -1)
+					prev.child[index].value++;
+			}
+		}
+
+		// Returns if the word is in the trie.
+		public boolean search(String word) {
+			char[] ch = word.toCharArray();
+			TrieNode node = root, prev =null;
+			int i;
+			for (i = 0; i < ch.length; i++) 
+			{
+				int index = chToInt(ch[i]);
+				if(node.child[index] ==null)
+					return false;
+				else
+				{
+					if(i == ch.length-1 && node.child[index].value<1)
+						return false;
+					node = node.child[index];
+						
+				}
+			}
+			return true;
+		}
+
+		// Returns if there is any word in the trie
+		// that starts with the given prefix.
+		public boolean startsWith(String prefix) {
+			char[] ch = prefix.toCharArray();
+			TrieNode node = root;
+			for (int i = 0; i < ch.length; i++) 
+			{
+				int index = chToInt(ch[i]);
+				if(node.child[index] == null)
+					return false;
+				else
+					node = node.child[index];
+			}
+			return true;
+		}
+	}
+
+// Your Trie object will be instantiated and called as such:
+// Trie trie = new Trie();
+// trie.insert("somestring");
+// trie.search("key");
