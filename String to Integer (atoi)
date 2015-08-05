@@ -1,0 +1,29 @@
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
+public class Solution {
+    public int myAtoi(String str) {
+        String regex = "[+|-]?[\\d]{1,11}";
+		str = str.trim();
+		Pattern pattern = Pattern.compile(regex);
+		Matcher matcher = pattern.matcher(str);
+		if(matcher.find())
+		{
+			int start = matcher.start();
+			if(start != 0)
+				return 0;
+			int end = matcher.end();
+			String string = str.substring(start,end);
+			Long a = Long.parseLong(string);
+			int z = Integer.MAX_VALUE;
+			if(a > z)// || a < Integer.MIN_VALUE)
+				return z;
+			if(a < Integer.MIN_VALUE)
+				return Integer.MIN_VALUE;
+			int b = Integer.parseInt(string);
+			return b;
+		}
+
+		return 0;
+    }
+}
