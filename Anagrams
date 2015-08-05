@@ -1,0 +1,34 @@
+public class Solution {
+    	public List<String> anagrams(String[] strs) {
+		Map<String, ArrayList<Integer>> map = new HashMap<String, ArrayList<Integer>>();
+		for (int i = 0; i < strs.length; i++) {
+			char[] temp = strs[i].toCharArray();
+			Arrays.sort(temp);
+			String string = new String(temp);
+			ArrayList<Integer> arrList;
+			if(map.containsKey(string))
+			{
+				arrList = map.get(string);
+				arrList.add(i);
+			}
+			else
+			{
+				arrList = new ArrayList<Integer>();
+				arrList.add(i);
+				map.put(string, arrList);
+			}
+		}
+		List<String> list = new LinkedList<String>();
+		ArrayList<Integer> arrayList;
+		for(Map.Entry<String, ArrayList<Integer>> entry : map.entrySet())
+		{
+			arrayList = entry.getValue();
+			if(arrayList.size()>1)
+			{
+				for(Integer item :  arrayList)
+					list.add(strs[item]);
+			}
+		}
+		return list;
+	}
+}
