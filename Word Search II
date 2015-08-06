@@ -1,0 +1,103 @@
+public class Solution {
+    public class TrieNode
+	{
+		boolean leaf;
+		Map<Character, TrieNode> map;
+		public TrieNode() {
+			// TODO Auto-generated constructor stub
+			leaf = false;
+			map = new HashMap<Character, TrieNode>();
+		}
+	}
+	
+	public class Trie
+	{
+		TrieNode root;
+		int count;
+		public Trie() {
+			// TODO Auto-generated constructor stub
+			root = new TrieNode();
+		}
+		
+		public void addWord(String string) 
+		{
+			char[] ch = string.toCharArray();
+			TrieNode trieNode = root;
+			for (int i = 0; i < ch.length; i++) {
+				if(trieNode.map.containsKey(ch[i]))
+					trieNode = trieNode.map.get(ch[i]);
+				else
+				{
+					TrieNode temp = new TrieNode();
+					trieNode.map.put(ch[i], temp);
+					trieNode = trieNode.map.get(ch[i]);
+				}
+				if(i == ch.length-1)
+					trieNode.leaf = true;
+			}
+		}
+		public boolean search(String string)
+		{
+			char[] ch = string.toCharArray();
+			TrieNode trieNode = root;
+			for (int i = 0; i < ch.length; i++)
+				if(trieNode.map.containsKey(ch[i]))
+					trieNode = trieNode.map.get(ch[i]);
+				else
+					return false;
+			return trieNode.leaf;
+		}
+		public boolean prefix(String string)
+		{
+			char[] ch = string.toCharArray();
+			TrieNode trieNode = root;
+			for (int i = 0; i < ch.length; i++)
+				if(trieNode.map.containsKey(ch[i]))
+					trieNode = trieNode.map.get(ch[i]);
+				else
+					return false;
+			return true;
+		}
+	}
+	
+	
+	
+	public void DFS(char[][] board, boolean[][] bool, int i, int j, StringBuffer strbuff, Set<String> list, Trie trie) 
+	{
+		if(i>=0 && i<board.length && j>=0 && j<board[0].length && !bool[i][j])
+		{
+			strbuff.append(board[i][j]);
+
+			bool[i][j] = true;
+			if(trie.prefix(strbuff.toString()))
+			{
+				if(trie.search(strbuff.toString()))
+					list.add(strbuff.toString());
+				DFS(board, bool, i-1, j, strbuff, list, trie);
+				DFS(board, bool, i+1, j, strbuff, list, trie);
+				DFS(board, bool, i, j-1, strbuff, list, trie);
+				DFS(board, bool, i, j+1, strbuff, list, trie);
+			}
+			strbuff.deleteCharAt(strbuff.length()-1);
+			bool[i][j] = false;
+		}
+	}
+	
+	public List<String> findWords(char[][] board, String[] words) 
+	{
+		Trie trie = new Trie();
+		Set<String> list = new HashSet<String>();
+		for(String string : words)
+		{
+			trie.addWord(string);
+		}
+		boolean[][] bool = new boolean[board.length][board[0].length];
+		StringBuffer strbuff = new StringBuffer();
+		
+		for (int i = 0; i < board.length; i++)
+			for (int j = 0; j < board[0].length; j++) 
+				DFS(board, bool, i, j, strbuff, list, trie);
+			
+		return new LinkedList<String>(list);
+	}
+}
