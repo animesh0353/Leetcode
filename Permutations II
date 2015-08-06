@@ -1,0 +1,46 @@
+public class Solution {
+    public void swap(int[] nums, int i, int j)
+	{
+		int temp = nums[i];
+		nums[i] = nums[j];
+		nums[j] = temp;
+	}
+	
+	public boolean checkDuplicate(int[] nums, int i, int val)
+	{
+		for (int j = i; j < nums.length; j++) {
+			if(nums[j] == val)
+				return true;
+		}
+		return false;
+	}
+	
+	public void permuteUtil(List<List<Integer>> list, int[] nums, int start, int len)
+	{
+		if(start == len)
+		{
+			List<Integer> list2 = new LinkedList<Integer>();
+			for(int val: nums)
+				list2.add(val);
+			list.add(list2);
+			return;
+		}
+		for (int i = start; i <= len; i++) 
+		{
+			if(checkDuplicate(nums, i+1, nums[i]))
+				continue;
+			swap(nums, start, i);
+			permuteUtil(list, nums, start+1, len);
+			swap(nums, start, i);
+		}
+	}
+	
+	
+    public List<List<Integer>> permuteUnique(int[] nums) 
+    {
+        List<List<Integer>> list = new LinkedList<List<Integer>>(); 
+		permuteUtil(list, nums, 0, nums.length-1);
+		return list;
+        
+    }
+}
