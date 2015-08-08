@@ -1,0 +1,50 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public static ListNode headNode;
+    public TreeNode sortedListToBST(ListNode head) {
+    	headNode = head;
+        ListNode head2 = head;
+        int len = 0;
+        while(head2!=null)
+        {
+        	len++;
+        	head2 = head2.next;
+        }
+        return partition(0, len-1);
+    }    
+    
+    public TreeNode partition(int low, int high)
+    {
+    	if(low<=high)
+    	{
+    		int mid = (low + high)/2;
+    		TreeNode lefTreeNode = partition(low, mid-1);
+    		TreeNode rooTreeNode = new TreeNode(headNode.val);
+    		headNode = headNode.next;
+    		TreeNode rightTreeNode = partition(mid+1, high); 
+    		
+    		rooTreeNode.left = lefTreeNode;
+    		rooTreeNode.right = rightTreeNode;
+    		return rooTreeNode;
+    		
+    	}
+    	else 
+    		return null;
+    }
+}
