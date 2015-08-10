@@ -1,0 +1,77 @@
+public class Solution {
+     public static int calculate(String s) {
+    	s = s.replaceAll(" ", "");
+        char[] ch = s.toCharArray();
+        int temp = 0;
+        Stack<String> stk = new Stack<String>();
+        for (int i = 0; i < ch.length; i++) {
+			switch (ch[i]) 
+			{
+			case '(': 
+				stk.push(new String(new char[] {ch[i]}));
+				break;
+			case '+':
+			case '-':
+				stk.push(new String(new char[] {ch[i]}));
+				break;
+			case ')':
+				ArrayList<String> arrayList = new ArrayList<String>();
+				while(!stk.isEmpty() && !stk.peek().equals("("))
+					arrayList.add(0,stk.pop());
+				if(!stk.isEmpty())
+					stk.pop();
+				if(arrayList.size() == 1)
+				{
+					stk.push(arrayList.get(0));
+				}
+				else
+				{
+					temp = 0;
+					for (int j = arrayList.size()-1; j > 0; j=j-2) {
+						if(arrayList.get(j-1).equals("-"))
+							temp += (-1*Integer.parseInt(arrayList.get(j)));
+						else
+							temp += Integer.parseInt(arrayList.get(j));
+
+					}
+					temp += Integer.parseInt(arrayList.get(0));
+					stk.push(Integer.toString(temp));
+				}
+				break;
+
+			default: 
+				StringBuffer strbuff = new StringBuffer();
+				while(i<ch.length && ch[i]>=48 && ch[i]<=57)
+				{
+					strbuff.append(ch[i]);
+					i++;
+				}
+				if(i<ch.length && (ch[i]<48 || ch[i]>57))
+					i--;
+				stk.push(strbuff.toString());
+				
+			}
+			
+		}
+        
+        ArrayList<String> arrayList = new ArrayList<String>();
+		while(!stk.isEmpty())
+			arrayList.add(stk.pop());
+		if(arrayList.size() == 1)
+			temp = Integer.parseInt(arrayList.get(0));
+		else
+		{
+		    temp = 0;
+			for (int j = 0; j < arrayList.size()-1; j=j+2) {
+				if(arrayList.get(j+1).equals("-"))
+					temp += (0-Integer.parseInt(arrayList.get(j)));
+				else
+					temp += Integer.parseInt(arrayList.get(j));
+
+			}
+			temp += Integer.parseInt(arrayList.get(arrayList.size()-1));
+		}
+        return temp;
+    }    
+    
+}
