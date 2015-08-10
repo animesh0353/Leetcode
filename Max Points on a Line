@@ -1,0 +1,50 @@
+/**
+ * Definition for a point.
+ * class Point {
+ *     int x;
+ *     int y;
+ *     Point() { x = 0; y = 0; }
+ *     Point(int a, int b) { x = a; y = b; }
+ * }
+ */
+public class Solution {
+    public int maxPoints(Point[] points) 
+    {
+    	if(points.length == 0)
+    		return 0;
+    	Map<Double, Integer> map = new HashMap<Double, Integer>();
+    	int num = 1;
+    	double slope = 0.0;
+    	for (int i = 0; i < points.length-1; i++) 
+    	{
+    		int duplicate = 1;
+    		int vertical =0;
+    		for (int j = i+1; j < points.length; j++) 
+    		{
+    			if(points[i].x - points[j].x == 0)
+    			{
+    				if(points[i].y == points[j].y)
+    					duplicate++;
+    				else
+    					vertical++;
+    			}
+    			else
+    			{
+    				slope = 1.0*(points[j].y-points[i].y)/(points[j].x - points[i].x);
+    				if(slope == -0.0)
+    					slope = 0.0;
+    				if(map.containsKey(slope))
+    					map.put(slope, map.get(slope)+1);
+    				else
+    					map.put(slope, 1);
+    			}
+			}
+    		for(Integer valInteger : map.values())
+        		num = Math.max(num, valInteger+duplicate);
+    		num = ((duplicate+vertical) > num)?(duplicate+vertical):num;
+    		map.clear();
+		}
+    	
+    	return num;
+    }
+}
