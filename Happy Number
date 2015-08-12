@@ -1,0 +1,26 @@
+public class Solution {
+    public boolean isHappy(int n) 
+    {
+        return recursive(n, new HashSet<Integer>());
+    }
+    
+    public boolean recursive(int n , Set<Integer> set)
+    {
+    	int sum = 0;
+    	while(n>0)
+    	{
+    		sum += (n%10)*(n%10);
+    		n /= 10;
+    		
+    	}
+    	if(sum == 1)
+    		return true;
+    	if(set.contains(sum))
+    		return false;
+    	else 
+    	{
+    		set.add(sum);
+    		return recursive(sum, set);
+		}
+    }
+}
