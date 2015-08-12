@@ -1,0 +1,57 @@
+public class Solution {
+    public List<String> wordBreak(String s, Set<String> wordDict) {
+        
+    	List<String> list = new LinkedList<String>();
+    	Map<Integer, ArrayList<String>> map = new TreeMap<Integer, ArrayList<String>>();
+    	boolean[] dp = new boolean[s.length()+1];
+    	dp[0] = true;
+    	for (int i = 0; i < s.length(); i++) {
+    		if(!dp[i])
+    			continue;
+			for(String word: wordDict)
+			{
+				ArrayList<String> arrayList;
+				int len = i + word.length();
+				if(len <= s.length() && s.substring(i, len).equals(word))
+				{
+					dp[len] = true;
+					if(!map.containsKey(len))
+					{
+						arrayList = new ArrayList<String>();
+						arrayList.add(word);
+						map.put(len, arrayList);
+					}
+					else
+					{
+						arrayList = map.get(len);
+						arrayList.add(word);
+					}
+						
+				}
+			}
+		}
+    	if(!dp[s.length()])
+    		return list;
+    	backTrack(map, s.length(), dp, s, "", list);
+    	for(String string: list)
+    		System.out.println(string);
+    	return list;
+    }
+    public void backTrack(Map<Integer, ArrayList<String>> map, int i, boolean[] dp, String s, String temp, List<String> list)
+    {
+    	if(i==0)
+    	{
+    		list.add(temp.trim());
+    		return;
+    	}
+    	if(i < 0 || !dp[i])
+    		return ;
+    	ArrayList<String> arr = map.get(i);
+    	for(String string : arr)
+    	{
+    		int len = string.length();
+    		
+    		backTrack(map, i-len, dp, s, string +" " + temp, list);
+    	}
+    }
+}
