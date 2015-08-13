@@ -1,0 +1,30 @@
+public class Solution {
+    public static boolean isIsomorphic(String s, String t) {
+    	if(s.length() != t.length())
+    		return false;
+        char[] originalChar = s.toCharArray();
+        char[] isomorphicChar = t.toCharArray();
+        Map<Character, Character> map = new HashMap<Character, Character>();
+        Map<Character, Character> reverseMap = new HashMap<Character, Character>();
+
+        for (int i = 0; i < isomorphicChar.length; i++) 
+        {
+        	if(reverseMap.containsKey(isomorphicChar[i]))
+        	{
+        		if(reverseMap.get(isomorphicChar[i]) != originalChar[i])
+        			return false;
+        	}
+        	else
+        		reverseMap.put(isomorphicChar[i], originalChar[i]);
+        		
+			if(map.containsKey(originalChar[i]))
+			{
+				if(isomorphicChar[i] != map.get(originalChar[i]))
+					return false;
+			}
+			else
+				map.put(originalChar[i], isomorphicChar[i]);
+		}
+        return true;
+    }
+}
