@@ -1,0 +1,25 @@
+public class Solution {
+    public int countPrimes(int n) {
+    	// this don't count the nth element
+        boolean[] prime = new boolean[n];
+        // Mark all element as prime 
+        for (int i = 2; i < n; i++)
+        	prime[i] = true;
+        // run the code from 2 to sqrt(n) 
+        int sqrt = (int)Math.sqrt(n);
+        for (int i = 2; i<=sqrt; i++)
+        {
+            if(!prime[i])  // if number is not prime then continue
+        		continue;
+        	// mark all multiple of current prime as false
+			for (int j = i*i; j < n; j = j+i) 
+				prime[j] = false;
+		}
+        int count = 0;
+        for (int i = 2; i < n; i++) 
+			if(prime[i])
+				count++;
+        return count;
+        
+    }
+}
