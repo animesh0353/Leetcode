@@ -1,0 +1,23 @@
+public class Solution {
+    public int rob(int[] nums)
+    {
+    	if(nums.length == 0)
+    		return 0;
+    	if(nums.length == 1)
+    		return nums[0];
+
+    	int n = nums.length;
+    	int dp1[] = new int[n+1];
+    	int dp2[] = new int[n+1];
+    	dp1[0] = dp2[0] = 0;
+    	dp1[1] = nums[0] ;   // counting the first element
+    	dp2[1] = 0;    // excluded the first element
+    	for (int i = 2; i < n; i++) 
+    	{
+    		dp1[i] = Math.max(dp1[i-1], dp1[i-2]+nums[i-1]);
+    		dp2[i] = Math.max(dp2[i-1], dp2[i-2]+nums[i-1]);
+    	}
+    	dp2[n] = Math.max(dp2[n-1] , dp2[n-2]+nums[n-1]);
+    	return Math.max(dp1[n-1], dp2[n]);
+    }
+}
