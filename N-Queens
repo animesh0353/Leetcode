@@ -1,0 +1,58 @@
+public class Solution {
+    public List<List<String>> solveNQueens(int n) 
+    {
+    	List<List<String>> list = new LinkedList<List<String>>();
+        int[][] board = new int[n][n];
+
+    	nQueen(list, board, n, 0, 0);
+        return list;
+    }
+    
+    public boolean nQueen(List<List<String>> list, int[][] board, int n, int row, int colStart)
+    {
+    	if(row == n)
+    	{
+    		List<String> innerList = new LinkedList<String>();
+    		for (int i = 0; i < n; i++) 
+    		{
+    			StringBuffer strbuff = new StringBuffer();
+    			for (int j = 0; j < n; j++) {
+    				if(board[i][j] == 1)
+    					strbuff.append("Q");
+    				else
+    					strbuff.append(".");
+    			}
+    			innerList.add(strbuff.toString());
+    		}
+    		list.add(innerList);
+    		return true;
+    	}
+    	for (int col = colStart; col < n; col++)
+    		if(isSafe(board, n, row, col))
+    		{
+    			board[row][col] = 1;
+    			nQueen(list, board, n, row+1, 0);
+    			board[row][col] = 0;	
+    		}
+    	return false;
+    }
+
+    public boolean isSafe(int[][] board, int n, int i, int j)
+    {
+    	// check straight line
+    	for (int row = i-1; row >= 0; row--) 
+    		if(board[row][j] == 1)
+    			return false;
+    	// check left diagonal
+    	for (int row = i-1, col = j-1; row >= 0 && col >= 0; row--, col--)    
+    		if(board[row][col] == 1)
+    			return false;
+    	// check right diagonal 
+    	for (int row = i-1, col = j+1; row >= 0 && col < n; row--,col++) 
+    		if(board[row][col] == 1)
+    			return false;
+    	// If no queen is present at both diagonal then mark as safe and return true
+    	return true;
+			
+    }
+}
